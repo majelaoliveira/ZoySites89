@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 00 — Minha Primeira Página HTML + CSS | ZoyMaker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #f5f0e8;
+      --surface:   #ffffff;
+      --border:    #e0d8cc;
+      --ink:       #1a1a2e;
+      --dim:       #8a8a9a;
+      --html-col:  #e8440a;
+      --css-col:   #1a6ebd;
+      --js-col:    #c9a800;
+      --green:     #1ab87a;
+      --pink:      #e8197a;
+      --purple:    #7c3aed;
+      --orange:    #f97316;
+      --red:       #e8440a;
+      --tag-bg:    #fff0ec;
+      --tag-border:#f4c0b0;
+      --prop-bg:   #ecf4ff;
+      --prop-border:#b0ccf4;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      background: var(--ink);
+      padding: 20px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .logo {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+    .logo span { color: #ff8c42; }
+    .lesson-badge {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      padding: 5px 14px;
+      border-radius: 20px;
+      background: #ff8c42;
+      color: #fff;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--ink);
+      color: #fff;
+      padding: 60px 40px 70px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, #e8440a22 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 50%, #1a6ebd22 0%, transparent 60%);
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+    .hero .kicker {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+      color: #ff8c42;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 1.15;
+      margin-bottom: 18px;
+    }
+    .hero h1 .hl-html { color: #ff7043; }
+    .hero h1 .hl-css  { color: #42a5f5; }
+    .hero .subtitle {
+      font-size: 1.05rem;
+      color: #b0b8d0;
+      max-width: 560px;
+      margin: 0 auto 30px;
+    }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+    .pill {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 2px;
+      padding: 5px 14px; border-radius: 20px; border: 1px solid;
+    }
+    .pill-html   { border-color: #ff7043; color: #ff7043; }
+    .pill-css    { border-color: #42a5f5; color: #42a5f5; }
+    .pill-green  { border-color: var(--green); color: var(--green); }
+    .pill-purple { border-color: #a78bfa; color: #a78bfa; }
+    .pill-grade  { border-color: #fbbf24; color: #fbbf24; }
+
+    /* ── LAYOUT ── */
+    .content { max-width: 860px; margin: 0 auto; padding: 0 40px 80px; }
+    @media (max-width: 600px) {
+      .hero, .toc-card { padding-left: 20px; padding-right: 20px; }
+      .content { padding: 0 20px 60px; }
+      .site-header { padding: 14px 20px; }
+    }
+
+    /* ── ÍNDICE ── */
+    .toc-card {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 32px;
+      max-width: 860px;
+      margin: -30px auto 0;
+      position: relative; z-index: 2;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    }
+    .toc-card h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      color: var(--dim);
+      margin-bottom: 16px;
+      letter-spacing: 1px;
+    }
+    .toc-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+    .toc-list li a {
+      font-size: 0.88rem; font-weight: 600;
+      color: var(--ink); text-decoration: none;
+      display: flex; align-items: center; gap: 10px;
+      padding: 6px 10px; border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .toc-list li a:hover { background: #f0eee8; }
+    .toc-num {
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.85rem;
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: #fff;
+    }
+    .n-html { background: var(--html-col); }
+    .n-css  { background: var(--css-col); }
+    .n-mix  { background: var(--purple); }
+    .n-green{ background: var(--green); }
+    .n-pink { background: var(--pink); }
+    @media (max-width: 560px) { .toc-list { grid-template-columns: 1fr; } }
+
+    /* ── SEÇÕES ── */
+    .section { margin-top: 56px; scroll-margin-top: 80px; }
+
+    .section-header {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 22px;
+    }
+    .section-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; flex-shrink: 0;
+    }
+    .ic-html   { background: #fff0ec; border: 2px solid #f4c0b0; }
+    .ic-css    { background: #ecf4ff; border: 2px solid #b0ccf4; }
+    .ic-mix    { background: #f3eeff; border: 2px solid #c4a8f8; }
+    .ic-green  { background: #e8faf2; border: 2px solid #9ae8cc; }
+    .ic-yellow { background: #fffbe8; border: 2px solid #f4e090; }
+    .ic-pink   { background: #fff0f6; border: 2px solid #f4b0cc; }
+
+    .section h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+    .section-num {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem; color: var(--dim);
+    }
+
+    p { margin-bottom: 14px; font-size: 0.97rem; }
+    strong { font-weight: 800; }
+    em { font-style: normal; font-weight: 700; }
+
+    /* ── CAIXAS ── */
+    .box {
+      border-radius: 12px; padding: 18px 22px;
+      margin: 20px 0; font-size: 0.92rem;
+    }
+    .box-label {
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.85rem; letter-spacing: 1px;
+      margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+    }
+    .box-analogy  { background: #fffbe8; border: 2px solid #f4e090; }
+    .box-analogy  .box-label { color: #c9a800; }
+    .box-concept  { background: #f3eeff; border: 2px solid #c4a8f8; }
+    .box-concept  .box-label { color: var(--purple); }
+    .box-tip      { background: #e8faf2; border: 2px solid #9ae8cc; }
+    .box-tip      .box-label { color: #0e9e67; }
+    .box-warn     { background: #fff0ec; border: 2px solid #f4c0b0; }
+    .box-warn     .box-label { color: var(--html-col); }
+    .box-project  { background: #fff0f6; border: 2px solid #f4b0cc; }
+    .box-project  .box-label { color: var(--pink); }
+
+    /* ── CÓDIGO ── */
+    .code-wrap { margin: 20px 0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+    .code-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 18px;
+      background: #1a1a2e;
+    }
+    .code-bar-label {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.65rem;
+      letter-spacing: 2px; color: #6a7090;
+    }
+    .code-bar-dots { display: flex; gap: 5px; }
+    .code-bar-dots span { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #ff5f56; }
+    .dot-y { background: #ffbd2e; }
+    .dot-g { background: #27c93f; }
+    .code-bar-file {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.7rem;
+      padding: 2px 10px; border-radius: 4px; letter-spacing: 1px;
+    }
+    .file-html { background: #ff704322; color: #ff7043; }
+    .file-css  { background: #42a5f522; color: #42a5f5; }
+    pre {
+      background: #0f1117;
+      padding: 20px 22px; overflow-x: auto;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.83rem; line-height: 1.85;
+      white-space: pre;
+    }
+
+    /* ── SYNTAX ── */
+    .t  { color: #ff7043; }   /* tag HTML */
+    .a  { color: #ffd54f; }   /* atributo */
+    .v  { color: #69f0ae; }   /* valor de atributo */
+    .cm { color: #546e7a; font-style: italic; } /* comentário */
+    .s  { color: #40c4ff; }   /* seletor CSS */
+    .p  { color: #ffd54f; }   /* propriedade CSS */
+    .cv { color: #69f0ae; }   /* valor CSS */
+    .kw { color: #ce93d8; }   /* palavra-chave */
+    .tx { color: #cfd8e8; }   /* texto normal */
+    .hl { background: #ff704322; border-radius: 3px; padding: 0 3px; } /* highlight */
+
+    /* ── COMPARATIVO DUPLO ── */
+    .split {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0;
+    }
+    @media (max-width: 580px) { .split { grid-template-columns: 1fr; } }
+    .split-card { border-radius: 12px; overflow: hidden; }
+    .split-header {
+      padding: 10px 18px;
+      font-family: 'Fredoka One', cursive; font-size: 0.9rem;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .sh-html { background: #ff7043; color: #fff; }
+    .sh-css  { background: #1a6ebd; color: #fff; }
+    .split-body { background: #0f1117; padding: 16px 18px; }
+    .split-body pre { padding: 0; background: transparent; }
+
+    /* ── TABELA ── */
+    .table-wrap { overflow-x: auto; margin: 20px 0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    th {
+      background: var(--ink); color: #fff;
+      font-family: 'Fredoka One', cursive; font-size: 0.85rem;
+      padding: 12px 16px; text-align: left;
+    }
+    td { padding: 11px 16px; border-bottom: 1px solid var(--border); background: var(--surface); vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #faf8f4; }
+    td code {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.8rem;
+      color: var(--html-col); background: var(--tag-bg);
+      padding: 2px 7px; border-radius: 5px;
+    }
+    td code.css { color: var(--css-col); background: var(--prop-bg); }
+
+    /* ── PREVIEW ── */
+    .preview-wrap {
+      border-radius: 12px; overflow: hidden;
+      border: 2px solid var(--border);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      margin: 20px 0;
+    }
+    .preview-bar {
+      background: #e8e4dc; padding: 8px 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .preview-bar-dots { display: flex; gap: 5px; }
+    .preview-bar-dots span { width: 10px; height: 10px; border-radius: 50%; }
+    .preview-url {
+      flex: 1; background: #fff; border-radius: 20px;
+      padding: 3px 14px; font-family: 'Share Tech Mono', monospace;
+      font-size: 0.68rem; color: var(--dim);
+    }
+    .preview-label {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.6rem;
+      letter-spacing: 2px; color: var(--dim);
+    }
+    .preview-body {
+      background: #fff; padding: 24px 28px;
+      font-family: Arial, sans-serif;
+    }
+
+    /* ── ESTRUTURA VISUAL ── */
+    .house {
+      background: var(--surface); border: 2px solid var(--border);
+      border-radius: 12px; padding: 24px; margin: 20px 0;
+      font-family: 'Share Tech Mono', monospace; font-size: 0.82rem;
+      line-height: 2.1;
+    }
+    .h-roof  { color: var(--html-col); }
+    .h-wall  { color: var(--css-col); padding-left: 22px; }
+    .h-room  { color: var(--purple); padding-left: 44px; }
+    .h-item  { color: var(--green); padding-left: 66px; }
+    .h-note  { color: var(--dim); font-style: italic; }
+
+    /* ── ATIVIDADE ── */
+    .activity {
+      background: var(--ink); color: #fff;
+      border-radius: 12px; padding: 28px 30px; margin: 28px 0;
+    }
+    .activity-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem; color: #ff8c42;
+      margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+    }
+    .activity ol { padding-left: 22px; }
+    .activity ol li { margin-bottom: 10px; font-size: 0.92rem; color: #c8d0e0; }
+    .activity ol li strong { color: #fff; }
+
+    /* ── FICHINHA DE REFERÊNCIA ── */
+    .ref-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px; margin: 20px 0;
+    }
+    .ref-card {
+      background: var(--surface); border: 2px solid var(--border);
+      border-radius: 10px; padding: 14px 16px;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .ref-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+    .ref-tag {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.8rem;
+      font-weight: 700; margin-bottom: 4px;
+    }
+    .ref-tag.html { color: var(--html-col); }
+    .ref-tag.css  { color: var(--css-col); }
+    .ref-desc { font-size: 0.8rem; color: var(--dim); }
+
+    /* ── PRÓXIMA AULA ── */
+    .next-card {
+      background: var(--ink); border-radius: 12px;
+      padding: 28px 32px; display: flex; align-items: center; gap: 20px;
+      margin-top: 56px; flex-wrap: wrap;
+    }
+    .next-card .arrow { font-size: 2rem; color: #ff8c42; }
+    .next-card h3 { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; letter-spacing: 3px; color: var(--dim); margin-bottom: 6px; }
+    .next-card p  { margin: 0; font-size: 0.95rem; color: #fff; }
+    .next-card p span { color: #ff8c42; }
+
+    footer {
+      text-align: center; padding: 20px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem; color: var(--dim);
+      letter-spacing: 2px; border-top: 2px solid var(--border);
+    }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ── SEPARADOR ── */
+    .divider { border: none; border-top: 2px dashed var(--border); margin: 48px 0 0; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════ HEADER ═══════ -->
+<header class="site-header">
+  <div class="logo">ZOY<span>MAKER</span></div>
+  <div class="lesson-badge">// AULA 00 — HTML + CSS</div>
+</header>
+
+<!-- ═══════ HERO ═══════ -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="kicker">// MÓDULO 1 · AULA 00 · AULA INICIAL</div>
+    <h1>Minha primeira página<br><span class="hl-html">HTML</span> com <span class="hl-css">CSS</span> separado</h1>
+    <p class="subtitle">
+      Como estrutura e estilo trabalham juntos — construindo o pensamento lógico de criação de sites do zero.
+    </p>
+    <div class="pill-row">
+      <span class="pill pill-grade">8º ANO</span>
+      <span class="pill pill-grade">9º ANO</span>
+      <span class="pill pill-html">HTML</span>
+      <span class="pill pill-css">CSS</span>
+      <span class="pill pill-green">IMAGENS</span>
+      <span class="pill pill-green">VÍDEO</span>
+      <span class="pill pill-purple">LÓGICA WEB</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ ÍNDICE ═══════ -->
+<div class="toc-card">
+  <h2>📋 Índice da Aula</h2>
+  <ul class="toc-list">
+    <li><a href="#s1"><span class="toc-num n-html">01</span> O que é uma página web?</a></li>
+    <li><a href="#s2"><span class="toc-num n-html">02</span> Os 3 arquivos do projeto</a></li>
+    <li><a href="#s3"><span class="toc-num n-html">03</span> Estrutura do index.html</a></li>
+    <li><a href="#s4"><span class="toc-num n-html">04</span> Tags essenciais do body</a></li>
+    <li><a href="#s5"><span class="toc-num n-css">05</span> O que é CSS e por que separar?</a></li>
+    <li><a href="#s6"><span class="toc-num n-css">06</span> Ligando o HTML ao CSS</a></li>
+    <li><a href="#s7"><span class="toc-num n-css">07</span> Seletores: tag, .class e #id</a></li>
+    <li><a href="#s8"><span class="toc-num n-css">08</span> Propriedades CSS essenciais</a></li>
+    <li><a href="#s9"><span class="toc-num n-mix">09</span> Imagens e vídeo no HTML</a></li>
+    <li><a href="#s10"><span class="toc-num n-green">10</span> Projeto da aula — análise completa</a></li>
+    <li><a href="#s11"><span class="toc-num n-pink">11</span> Fichinha de referência + desafio</a></li>
+  </ul>
+</div>
+
+<!-- ═══════ CONTEÚDO ═══════ -->
+<div class="content">
+
+  <!-- ─── S1 ─── -->
+  <section class="section" id="s1">
+    <div class="section-header">
+      <div class="section-icon ic-yellow">🌐</div>
+      <div>
+        <div class="section-num">01</div>
+        <h2>O que é uma página web?</h2>
+      </div>
+    </div>
+
+    <p>
+      Toda página que você abre no navegador — Google, YouTube, Instagram — é feita com os mesmos ingredientes básicos.
+      Não existe mágica. Existe <strong>código</strong>.
+    </p>
+    <p>
+      Mas esse código é dividido em responsabilidades muito claras. Pensa assim:
+    </p>
+
+    <div class="box box-analogy">
+      <div class="box-label">🏠 Analogia: A casa</div>
+      <p>Imagine que um site é uma <strong>casa</strong>.</p>
+      <p>• O <strong style="color: var(--html-col)">HTML</strong> é a <strong>estrutura</strong> — paredes, teto, portas, janelas. Define o que existe e onde fica.</p>
+      <p>• O <strong style="color: var(--css-col)">CSS</strong> é a <strong>decoração</strong> — cor da parede, tapete, cortinas, móveis. Define como tudo parece.</p>
+      <p style="margin:0">• O <strong style="color: var(--js-col)">JavaScript</strong> é a <strong>elétrica e hidráulica</strong> — o que faz as coisas funcionarem: luz que acende, torneira que abre. (Veremos isso nas próximas aulas!)</p>
+    </div>
+
+    <div class="box box-tip">
+      <div class="box-label">💡 Por que aprender isso?</div>
+      Você já usou dezenas de sites hoje. Depois desta aula, você vai conseguir <strong>criar</strong> um — e entender como tudo funciona por baixo do que você vê na tela.
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ─── S2 ─── -->
+  <section class="section" id="s2">
+    <div class="section-header">
+      <div class="section-icon ic-html">📁</div>
+      <div>
+        <div class="section-num">02</div>
+        <h2>Os 3 arquivos do projeto</h2>
+      </div>
+    </div>
+
+    <p>
+      O projeto desta aula tem <strong>3 arquivos</strong> na mesma pasta. Essa organização é a base de qualquer site real.
+    </p>
+
+    <div class="house">
+      <div class="h-roof">📁 minha-pagina/  ← pasta do projeto</div>
+      <div class="h-wall">├── 📄 index.html  <span class="h-note">← estrutura da página (o "esqueleto")</span></div>
+      <div class="h-wall">├── 🎨 style.css   <span class="h-note">← aparência visual (o "visual")</span></div>
+      <div class="h-wall">└── 🖼️ eu.jpg      <span class="h-note">← imagem usada na página</span></div>
+    </div>
+
+    <div class="box box-concept">
+      <div class="box-label">🧠 Conceito: Por que a pasta importa?</div>
+      O HTML usa o nome do arquivo para encontrar recursos. Se o CSS está em outra pasta e você escrever só <code style="font-family:'Share Tech Mono',monospace">style.css</code>, ele não vai achar. Todos os arquivos do projeto precisam estar juntos, ou você indica o caminho completo.
+    </div>
+
+    <div class="box box-warn">
+      <div class="box-label">⚠️ Atenção: index.html é especial</div>
+      Todo servidor web do mundo, quando alguém acessa um endereço sem especificar um arquivo (tipo <code style="font-family:'Share Tech Mono',monospace">192.168.4.1</code>), procura automaticamente por um arquivo chamado <strong>index.html</strong>. Por isso esse nome é padrão — é o ponto de entrada do site!
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ─── S3 ─── -->
+  <section class="section" id="s3">
+    <div class="section-header">
+      <div class="section-icon ic-html">🦴</div>
+      <div>
+        <div class="section-num">03</div>
+        <h2>Estrutura do index.html</h2>
+      </div>
+    </div>
+
+    <p>
+      Todo arquivo HTML começa com a mesma "receita base". Veja o arquivo do projeto desta aula:
+    </p>
+
+    <div class="code-wrap">
+      <div class="code-bar">
+        <div class="code-bar-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+        <span class="code-bar-label">ARQUIVO DO ALUNO</span>
+        <span class="code-bar-file file-html">index.html</span>
+      </div>
+      <pre><span class="t">&lt;!DOCTYPE html&gt;</span>                  <span class="cm">&lt;!-- "Ei navegador, isso é HTML5!" --&gt;</span>
+<span class="t">&lt;html</span> <span class="a">lang</span>=<span class="v">"pt-br"</span><span class="t">&gt;</span>               <span class="cm">&lt;!-- idioma da página: português --&gt;</span>
+
+  <span class="t">&lt;head&gt;</span>                           <span class="cm">&lt;!-- cabeçalho: configurações invisíveis --&gt;</span>
+    <span class="t">&lt;meta</span> <span class="a">charset</span>=<span class="v">"UTF-8"</span><span class="t">&gt;</span>         <span class="cm">&lt;!-- aceita ç, ã, é, ó... --&gt;</span>
+    <span class="t">&lt;meta</span> <span class="a">name</span>=<span class="v">"viewport"</span> <span class="a">content</span>=<span class="v">"width=device-width"</span><span class="t">&gt;</span>  <span class="cm">&lt;!-- funciona no celular --&gt;</span>
+    <span class="t">&lt;title&gt;</span>Minha primeira página<span class="t">&lt;/title&gt;</span>  <span class="cm">&lt;!-- texto da aba do navegador --&gt;</span>
+    <span class="t">&lt;link</span> <span class="a">rel</span>=<span class="v">"stylesheet"</span> <span class="a">href</span>=<span class="v">"style.css"</span><span class="t">&gt;</span>  <span class="cm">&lt;!-- conecta o CSS! --&gt;</span>
+  <span class="t">&lt;/head&gt;</span>
+
+  <span class="t">&lt;body&gt;</span>                           <span class="cm">&lt;!-- tudo que aparece na tela --&gt;</span>
+    <span class="t">&lt;h1&gt;</span>Olá, mundo!<span class="t">&lt;/h1&gt;</span>
+    <span class="t">&lt;img</span> <span class="a">src</span>=<span class="v">"eu.jpg"</span> <span class="a">alt</span>=<span class="v">"Exemplo de imagem"</span><span class="t">&gt;</span>
+    <span class="t">&lt;p</span> <span class="a">class</span>=<span class="v">"p1"</span><span class="t">&gt;</span>Esta é minha primeira página HTML.<span class="t">&lt;/p&gt;</span>
+    <span class="t">&lt;p</span> <span class="a">class</span>=<span class="v">"p2"</span><span class="t">&gt;</span>Este é meu segundo parágrafo.<span class="t">&lt;/p&gt;</span>
+    <span class="t">&lt;p</span> <span class="a">class</span>=<span class="v">"p3"</span><span class="t">&gt;</span>Este é meu terceiro parágrafo.<span class="t">&lt;/p&gt;</span>
+  <span class="t">&lt;/body&gt;</span>
+
+<span class="t">&lt;/html&gt;</span></pre>
+    </div>
+
+    <div class="box box-analogy">
+      <div class="box-label">🧅 Analogia: Tags são como cebolas</div>
+      <p>Tags HTML funcionam em <strong>camadas</strong>. A tag de fora "abraça" tudo que está dentro:</p>
+      <p><code style="font-family:'Share Tech Mono',monospace; color:var(--html-col)">&lt;html&gt;</code> abraça tudo → <code style="font-family:'Share Tech Mono',monospace; color:var(--html-col)">&lt;head&gt;</code> e <code style="font-family:'Share Tech Mono',monospace; color:var(--html-col)">&lt;body&gt;</code> ficam dentro → dentro do body ficam os textos, imagens, etc.</p>
+      <p style="margin:0">Isso se chama <strong>aninhamento</strong> (nesting). Nunca feche uma tag antes de fechar as que estão dentro dela!</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Tag</th><th>O que é</th><th>Fica em</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>&lt;!DOCTYPE html&gt;</code></td><td>Declaração de versão. Não é tag — é instrução para o navegador.</td><td>Antes de tudo</td></tr>
+          <tr><td><code>&lt;html lang="pt-br"&gt;</code></td><td>Elemento raiz. Contém toda a página. <code>lang</code> define o idioma.</td><td>Raiz</td></tr>
+          <tr><td><code>&lt;head&gt;</code></td><td>Configurações da página. Nada aqui aparece na tela.</td><td>Dentro de html</td></tr>
+          <tr><td><code>&lt;body&gt;</code></td><td>Conteúdo visível. Tudo que o usuário vê e interage.</td><td>Dentro de html</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ─── S4 ─── -->
+  <section class="section" id="s4">
+    <div class="section-header">
+      <div class="section-icon ic-html">🏷️</div>
+      <div>
+        <div class="section-num">04</div>
+        <h2>Tags essenciais do body</h2>
+      </div>
+    </div>
+
+    <p>
+      Dentro do <code style="font-family:'Share Tech Mono',monospace; color:var(--html-col)">&lt;body&gt;</code>, usamos tags para dizer ao navegador
+      <strong>o que é cada coisa</strong> — um título, um parágrafo, uma imagem, um vídeo.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Tag</th><th>O que faz</th><th>Exemplo do projeto</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>&lt;h1&gt;</code> a <code>&lt;h6&gt;</code></td>
+            <td>Títulos. h1 é o mais importante (maior), h6 é o menor.</td>
+            <td><code>&lt;h1&gt;Olá, mundo!&lt;/h1&gt;</code></td>
+          </tr>
+          <tr>
+            <td><code>&lt;p&gt;</code></td>
+            <td>Parágrafo de texto. O bloco mais comum de conteúdo.</td>
+            <td><code>&lt;p class="p1"&gt;...&lt;/p&gt;</code></td>
+          </tr>
+          <tr>
+            <td><code>&lt;img&gt;</code></td>
+            <td>Exibe uma imagem. Tag que se fecha sozinha (sem barra no final).</td>
+            <td><code>&lt;img src="eu.jpg" alt="..."&gt;</code></td>
+          </tr>
+          <tr>
+            <td><code>&lt;video&gt;</code></td>
+            <td>Reproduz um vídeo. Precisa de <code>&lt;source&gt;</code> dentro.</td>
+            <td><code>&lt;video autoplay loop muted&gt;</code></td>
+          </tr>
+          <tr>
+            <td><code>&lt;a&gt;</code></td>
+            <td>Link clicável. O atributo <code>href</code> define o destino.</td>
+            <td><code>&lt;a href="pagina2.html"&gt;Ir&lt;/a&gt;</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="box box-concept">
+      <div class="box-label">🧠 Conceito: Atributos</div>
+      <p>Atributos são <strong>informações extras</strong> que você passa dentro da tag de abertura, no formato <code style="font-family:'Share Tech Mono',monospace">nome="valor"</code>.</p>
+      <p>Ex.: <code style="font-family:'Share Tech Mono',monospace; color:var(--html-col)">&lt;img <strong>src="eu.jpg"</strong> <strong>alt="minha foto"</strong>&gt;</code></p>
+      <p>• <strong>src</strong> → "source" (fonte) — diz qual imagem carregar.</p>
+      <p style="margin:0">• <strong>alt</strong> → "alternative text" — texto que aparece se a imagem não carregar, e que ajuda leitores de tela para deficientes visuais.</p>
+    </div>
+
+    <p>Veja como o resultado aparece no navegador com o HTML puro (sem CSS ainda):</p>
+
+    <div class="preview-wrap">
+      <div class="preview-bar">
+        <div class="preview-bar-dots">
+          <span style="background:#ff5f56"></span>
+          <span style="background:#ffbd2e"></span>
+          <span style="background:#27c93f"></span>
+        </div>
+        <div class="preview-url">127.0.0.1 / index.html</div>
+        <span class="preview-label">SEM CSS</span>
+      </div>
+      <div class="preview-body">
+        <h1 style="font-size:2em; margin-bottom:8px;">Olá, mundo!</h1>
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect width='80' height='80' fill='%23ddd'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='11' fill='%23999'%3Eeu.jpg%3C/text%3E%3C/svg%3E" alt="eu.jpg" style="margin-bottom:8px; display:block;">
+        <p style="margin-bottom:4px;">Esta é minha primeira página HTML.</p>
+        <p style="margin-bottom:4px;">Este é meu segundo parágrafo.</p>
+        <p style="margin-bottom:4px;">Este é meu terceiro parágrafo.</p>
+      </div>
+    </div>
+
+    <p style="color:var(--dim); font-size:0.88rem; text-align:center; margin-top:-8px;">
+      ↑ Sem CSS, o navegador usa seus estilos padrão. Funciona, mas é feio. Vamos melhorar isso!
+    </p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ─── S5 ─── -->
+  <section class="section" id="s5">
+    <div class="section-header">
+      <div class="section-icon ic-css">🎨</div>
+      <div>
+        <div class="section-num">05</div>
+        <h2>O que é CSS e por que separar?</h2>
+      </div>
+    </div>
+
+    <p>
+      <strong>CSS</strong> (Cascading Style Sheets — Folhas de Estilo em Cascata) é a linguagem que define
+      <em>como os elementos HTML aparecem na tela</em>: cor, tamanho, espaçamento, borda, fonte, posição.
+    </p>
+
+    <div class="box box-analogy">
+      <div class="box-label">👕 Analogia: Roupa e corpo</div>
+      <p>O HTML é o seu <strong>corpo</strong> — existente, com estrutura, com partes definidas (cabeça, braços, tronco).</p>
+      <p style="margin:0">O CSS é a <strong>roupa</strong> que você coloca. Você pode trocar a roupa (mudar o CSS) sem mudar o corpo (o HTML). O mesmo corpo pode ter aparências completamente diferentes só trocando as roupas!</p>
+    </div>
+
+    <p>Por que colocar o CSS em um arquivo separado (<code style="font-family:'Share Tech Mono',monospace">style.css</code>) em vez de misturar com o HTML?</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>CSS junto no HTML</th><th>CSS em arquivo separado ✅</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Arquivo bagunçado, difícil de ler.</td>
+            <td>Código organizado e limpo.</td>
+          </tr>
+          <tr>
+            <td>Se quiser mudar a cor de todos os parágrafos, tem que achar um por um.</td>
+            <td>Muda uma linha no CSS e todos os elementos mudam juntos.</td>
+          </tr>
+          <tr>
+            <td>Não funciona em várias páginas ao mesmo tempo.</td>
+            <td>Um único style.css serve para quantas páginas você quiser.</td>
+          </tr>
+          <tr>
+            <td>HTML e visual misturados = difícil de manutenção.</td>
+            <td>Separação de responsabilidades = profissional.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="box box-concept">
+      <div class="box-label">🧠 Conceito: Cascata</div>
+      O "C" de CSS significa <strong>Cascata</strong> — os estilos "fluem" de cima para baixo como uma cachoeira.
+      Um estilo definido no <code style="font-family:'Share Tech Mono',monospace; color:var(--css-col)">body</code> vale para todos os elementos dentro dele,
+      mas um estilo mais específico (numa <code style="font-family:'Share Tech Mono',monospace; color:var(--css-col)">.class</code>, por exemplo) ganha do genérico.
+      Isso é chamado de <strong>especificidade</strong>.
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ─── S6 ─── -->
+  <section class="section" id="s6">
+    <div class="section-header">
+      <div class="section-icon ic-mix">🔗</div>
+      <div>
+        <div class="section-num">06</div>
+        <h2>Ligando o HTML ao CSS</h2>
+      </div>
+    </div>
+
+    <p>
+      O HTML não sabe que o CSS existe a não ser que você <strong>avise</strong> explicitamente.
+      Fazemos isso com a tag <code style="font-family:'Share Tech Mono',monospace; color:var(--html-col)">&lt;link&gt;</code> dentro do <code style="font-family:'Share Tech Mono',monospace">&lt;head&gt;</code>.
+    </p>
+
+    <div class="code-wrap">
+      <div class="code-bar">
+        <div class="code-bar-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+        <span class="code-bar-label">LINHA MAIS IMPORTANTE</span>
+        <span class="code-bar-file file-html">index.html — dentro do &lt;head&gt;</span>
+      </div>
+      <pre><span class="t">&lt;link</span> <span class="a">rel</span>=<span class="v">"stylesheet"</span> <span class="a">href</span>=<span class="v">"style.css"</span><span class="t">&gt;</span>
+
+<span class="cm">&lt;!--
+  rel="stylesheet"  →  "esta é uma folha de estilo"
+  href="style.css"  →  "encontre o arquivo chamado style.css"
+                        (na mesma pasta que este index.html)
+--&gt;</span></pre>
+    </div>
+
+    <div class="box box-warn">
+      <div class="box-label">⚠️ Erro clássico de iniciante</div>
+      <p>Esquecer de colocar a tag <code style="font-family:'Share Tech Mono',monospace">&lt;link&gt;</code> ou errar o nome do arquivo (<code style="font-family:'Share Tech Mono',monospace">Style.css</code> com S maiúsculo, por exemplo). Se o CSS não carregar, a página aparece sem estilo nenhum.</p>
+      <p style="margin:0"><strong>Dica:</strong> sempre salve o arquivo com letras minúsculas e sem espaços.</p>
+    </div>
+
+    <div class="box box-analogy">
+      <div class="box-label">🔌 Analogia: A tomada</div>
+      O HTML é o aparelho elétrico. O CSS é a energia. A tag <code style="font-family:'Share Tech Mono',monospace">&lt;link&gt;</code> é o <strong>cabo que conecta os dois</strong>. Sem o cabo, o aparelho existe mas não funciona com sua capacidade total.
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ─── S7 ─── -->
+  <section class="section" id="s7">
+    <div class="section-header">
+      <div class="section-icon ic-css">🎯</div>
+      <div>
+        <div class="section-num">07</div>
+        <h2>Seletores: tag, .class e #id</h2>
+      </div>
+    </div>
+
+    <p>
+      Para aplicar estilo, o CSS precisa saber <strong>quem</strong> vai receber aquele estilo.
+      Para isso existem os <em>seletores</em> — formas de "apontar" para elementos específicos.
+    </p>
+
+    <div class="split">
+      <div class="split-card">
+        <div class="split-header sh-html">📄 HTML — o que existe</div>
+        <div class="split-body">
+          <pre><span class="t">&lt;h1&gt;</span>Olá, mundo!<span class="t">&lt;/h1&gt;</span>
+
+<span class="t">&lt;p</span> <span class="a">class</span>=<span class="v">"p1"</span><span class="t">&gt;</span>
+  Parágrafo verde
+<span class="t">&lt;/p&gt;</span>
+
+<span class="t">&lt;p</span> <span class="a">class</span>=<span class="v">"p2"</span><span class="t">&gt;</span>
+  Parágrafo roxo
+<span class="t">&lt;/p&gt;</span>
+
+<span class="t">&lt;p</span> <span class="a">class</span>=<span class="v">"p3"</span><span class="t">&gt;</span>
+  Parágrafo amarelo
+<span class="t">&lt;/p&gt;</span></pre>
+        </div>
+      </div>
+      <div class="split-card">
+        <div class="split-header sh-css">🎨 CSS — como vai parecer</div>
+        <div class="split-body">
+          <pre><span class="cm">/* seletor de TAG: afeta todo h1 */</span>
+<span class="s">h1</span> {
+  <span class="p">color</span>: <span class="cv">red</span>;
+}
+
+<span class="cm">/* seletor de CLASS: afeta só .p1 */</span>
+<span class="s">.p1</span> { <span class="p">color</span>: <span class="cv">green</span>; }
+
+<span class="cm">/* seletor de CLASS: afeta só .p2 */</span>
+<span class="s">.p2</span> { <span class="p">color</span>: <span class="cv">purple</span>; }
+
+<span class="cm">/* seletor de CLASS: afeta só .p3 */</span>
+<span class="s">.p3</span> { <span class="p">color</span>: <span class="cv">yellow</span>; }</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Seletor</th><th>Como escrever</th><th>Afeta quem?</th><th>Exemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Tag</strong></td>
+            <td>Só o nome da tag</td>
+            <td>Todos os elementos daquela tag</td>
+            <td><code class="css">h1 { color: red; }</code></td>
+          </tr>
+          <tr>
+            <td><strong>Class</strong></td>
+            <td>Ponto + nome da classe</td>
+            <td>Todos os elementos com aquela class=</td>
+            <td><code class="css">.p1 { color: green; }</code></td>
+          </tr>
+          <tr>
+            <td><strong>ID</strong></td>
+            <td>Hashtag + nome do id</td>
+            <td>O elemento único com aquele id=</td>
+            <td><code class="css">#titulo { font-size: 2rem; }</code></td>
+          </tr>
+          <tr>
+            <td><strong>Todos</strong></td>
+            <td>Asterisco *</td>
+            <td>Absolutamente todos os elementos</td>
+            <td><code class="css">* { box-sizing: border-box; }</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="box box-concept">
+      <div class="box-label">🧠 Conceito: class vs. id</div>
+      <p>• <strong>class</strong> → pode repetir. Vários elementos podem ter a mesma classe. Use para estilos que se repetem.</p>
+      <p style="margin:0">• <strong>id</strong> → deve ser único na página. Só um elemento pode ter aquele id. Use para elementos únicos (ex.: o cabeçalho principal, o botão de envio).</p>
+    </div>
+
+    <div class="box box-tip">
+      <div class="box-label">💡 Dica: Por que usar classes?</div>
+      No projeto desta aula, os três parágrafos são todos <code style="font-family:'Share Tech Mono',monospace">&lt;p&gt;</code> — a mesma tag. Se estilizarmos pela tag, os três ficariam iguais. Com <strong>classes diferentes</strong> (p1, p2, p3), podemos dar uma cor diferente a cada um!
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ─── S8 ─── -->
+  <section class="section" id="s8">
+    <div class="section-header">
+      <div class="section-icon ic-css">⚙️</div>
+      <div>
+        <div class="section-num">08</div>
+        <h2>Propriedades CSS essenciais</h2>
+      </div>
+    </div>
+
+    <p>
+      Um bloco CSS tem sempre a mesma estrutura: <strong>seletor</strong> + chaves + <strong>propriedade: valor;</strong>
+    </p>
+
+    <div class="code-wrap">
+      <div class="code-bar">
+        <div class="code-bar-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+        <span class="code-bar-label">ARQUIVO DO ALUNO — COMPLETO</span>
+        <span class="code-bar-file file-css">style.css</span>
+      </div>
+      <pre><span class="cm">/* ─── Título ─────────────────────────────── */</span>
+<span class="s">h1</span> {
+    <span class="p">color</span>: <span class="cv">red</span>;        <span class="cm">/* cor do texto */</span>
+}
+
+<span class="cm">/* ─── Parágrafos com classes diferentes ───── */</span>
+<span class="s">.p1</span> { <span class="p">color</span>: <span class="cv">green</span>; }
+<span class="s">.p2</span> { <span class="p">color</span>: <span class="cv">purple</span>; }
+<span class="s">.p3</span> { <span class="p">color</span>: <span class="cv">yellow</span>; }
+
+<span class="cm">/* ─── Corpo da página ────────────────────── */</span>
+<span class="s">body</span> {
+    <span class="p">max-width</span>: <span class="cv">800px</span>;    <span class="cm">/* largura máxima: não estica além de 800px */</span>
+    <span class="p">margin</span>: <span class="cv">0 auto</span>;      <span class="cm">/* centraliza na tela (margem automática) */</span>
+    <span class="p">text-align</span>: <span class="cv">center</span>;  <span class="cm">/* centraliza o texto */</span>
+    <span class="p">color</span>: <span class="cv">blue</span>;          <span class="cm">/* cor padrão do texto */</span>
+}
+
+<span class="cm">/* ─── Imagem ─────────────────────────────── */</span>
+<span class="s">img</span> {
+    <span class="p">width</span>: <span class="cv">200px</span>;            <span class="cm">/* largura fixa de 200 pixels */</span>
+    <span class="p">border</span>: <span class="cv">5px solid black</span>;  <span class="cm">/* borda 5px, linha cheia, preta */</span>
+    <span class="p">display</span>: <span class="cv">block</span>;           <span class="cm">/* faz a imagem ser um bloco */</span>
+    <span class="p">margin</span>: <span class="cv">0 auto</span>;           <span class="cm">/* centraliza a imagem */</span>
+    <span class="p">margin-bottom</span>: <span class="cv">20px</span>;      <span class="cm">/* espaço embaixo da imagem */</span>
+}
+
+<span class="cm">/* ─── Vídeo ──────────────────────────────── */</span>
+<span class="s">video</span> {
+    <span class="p">display</span>: <span class="cv">block</span>;       <span class="cm">/* trata como bloco */</span>
+    <span class="p">margin</span>: <span class="cv">0 auto</span>;      <span class="cm">/* centraliza */</span>
+    <span class="p">width</span>: <span class="cv">100%</span>;         <span class="cm">/* ocupa a largura disponível */</span>
+    <span class="p">max-width</span>: <span class="cv">800px</span>;    <span class="cm">/* mas nunca passa de 800px */</span>
+    <span class="p">margin-top</span>: <span class="cv">20px</span>;    <span class="cm">/* espaço acima do vídeo */</span>
+}</pre>
+    </div>
+
+    <div class="box box-concept">
+      <div class="box-label">🧠 Conceito: display block</div>
+      <p>Por padrão, <code style="font-family:'Share Tech Mono',monospace">&lt;img&gt;</code> e <code style="font-family:'Share Tech Mono',monospace">&lt;video&gt;</code> são elementos <strong>inline</strong> — ficam na mesma linha que o texto. Com <code style="font-family:'Share Tech Mono',monospace; color:var(--css-col)">display: block</code> eles viram <strong>blocos</strong>, ocupam a linha toda sozinhos, e aí o <code style="font-family:'Share Tech Mono',monospace; color:var(--css-col)">margin: 0 auto</code> consegue centralizá-los.</p>
+      <p style="margin:0">Regra: <strong>margin: 0 auto</strong> só centraliza elementos que são blocos (<code style="font-family:'Share Tech Mono',monospace">display: block</code>) e que têm uma largura definida.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Propriedade CSS</th><th>O que controla</th><th>Exemplo do style.css</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code class="css">color</code></td><td>Cor do texto</td><td><code class="css">color: red</code> — h1 vermelho</td></tr>
+          <tr><td><code class="css">background-color</code></td><td>Cor de fundo do elemento</td><td><code class="css">background-color: #f0f0f0</code></td></tr>
+          <tr><td><code class="css">font-size</code></td><td>Tamanho da fonte</td><td><code class="css">font-size: 18px</code></td></tr>
+          <tr><td><code class="css">font-family</code></td><td>Tipo de fonte (tipografia)</td><td><code class="css">font-family: Arial</code></td></tr>
+          <tr><td><code class="css">text-align</code></td><td>Alinhamento do texto</td><td><code class="css">text-align: center</code></td></tr>
+          <tr><td><code class="css">width</code> / <code class="css">max-width</code></td><td>Largura do elemento</td><td><code class="css">width: 200px</code> — imagem</td></tr>
+          <tr><td><code class="css">margin</code></td><td>Espaço externo (fora da borda)</td><td><code class="css">margin: 0 auto</code> — centraliza</td></tr>
+          <tr><td><code class="css">padding</code></td><td>Espaço interno (dentro da borda)</td><td><code class="css">padding: 20px</code></td></tr>
+          <tr><td><code class="css">border</code></td><td>Borda do elemento</td><td><code class="css">border: 5px solid black</code></td></tr>
+          <tr><td><code class="css">display</code></td><td>Comportamento de bloco ou linha</td><td><code class="css">display: block</code> — img/video</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ─── S9 ─── -->
+  <section class="section" id="s9">
+    <div class="section-header">
+      <div class="section-icon ic-mix">🖼️</div>
+      <div>
+        <div class="section-num">09</div>
+        <h2>Imagens e vídeo no HTML</h2>
+      </div>
+    </div>
+
+    <p>
+      Imagens e vídeos tornam uma página muito mais interessante. No HTML do projeto, temos os dois. Veja como funcionam:
+    </p>
+
+    <div class="code-wrap">
+      <div class="code-bar">
+        <div class="code-bar-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+        <span class="code-bar-label">IMAGEM E VÍDEO</span>
+        <span class="code-bar-file file-html">index.html</span>
+      </div>
+      <pre><span class="cm">&lt;!-- ─── IMAGEM ──────────────────────────────── --&gt;</span>
+<span class="t">&lt;img</span>
+  <span class="a">src</span>=<span class="v">"eu.jpg"</span>               <span class="cm">&lt;!-- src = nome do arquivo da imagem --&gt;</span>
+  <span class="a">alt</span>=<span class="v">"Exemplo de imagem"</span>   <span class="cm">&lt;!-- alt = descrição (acessibilidade) --&gt;</span>
+<span class="t">&gt;</span>
+<span class="cm">&lt;!-- &lt;img&gt; NÃO tem tag de fechamento! --&gt;</span>
+
+
+<span class="cm">&lt;!-- ─── VÍDEO ───────────────────────────────── --&gt;</span>
+<span class="t">&lt;video</span>
+  <span class="a">autoplay</span>          <span class="cm">&lt;!-- começa a tocar automaticamente --&gt;</span>
+  <span class="a">loop</span>              <span class="cm">&lt;!-- repete quando chega ao fim --&gt;</span>
+  <span class="a">muted</span>             <span class="cm">&lt;!-- sem som (obrigatório para autoplay funcionar) --&gt;</span>
+  <span class="a">playsinline</span>       <span class="cm">&lt;!-- toca no celular sem ir para tela cheia --&gt;</span>
+<span class="t">&gt;</span>
+  <span class="t">&lt;source</span> <span class="a">src</span>=<span class="v">"eu_gato_robo.mp4"</span> <span class="a">type</span>=<span class="v">"video/mp4"</span><span class="t">&gt;</span>
+  Seu navegador não suporta vídeo.  <span class="cm">&lt;!-- texto de fallback --&gt;</span>
+<span class="t">&lt;/video&gt;</span></pre>
+    </div>
+
+    <div class="box box-tip">
+      <div class="box-label">💡 Por que muted é obrigatório com autoplay?</div>
+      Os navegadores modernos bloqueiam autoplay com som para não irritar o usuário. Se colocar <code style="font-family:'Share Tech Mono',monospace">autoplay</code> sem <code style="font-family:'Share Tech Mono',monospace">muted</code>, o vídeo simplesmente não vai iniciar. Com <code style="font-family:'Share Tech Mono',monospace">muted</code>, o autoplay funciona normalmente.
+    </div>
+
+    <div class="box box-concept">
+      <div class="box-label">🧠 Conceito: Formatos de arquivo</div>
+      <p>O navegador só consegue exibir tipos específicos de arquivo:</p>
+      <p>• <strong>Imagens:</strong> .jpg, .png, .gif, .webp, .svg</p>
+      <p style="margin:0">• <strong>Vídeos:</strong> .mp4 (H.264) funciona em todos os navegadores. Evite .avi, .mov e .wmv diretamente no HTML.</p>
+    </div>
+
+    <div class="box box-warn">
+      <div class="box-label">⚠️ Imagem não aparece? Veja esses erros</div>
+      <p>1. Nome errado: <code style="font-family:'Share Tech Mono',monospace">Eu.jpg</code> ≠ <code style="font-family:'Share Tech Mono',monospace">eu.jpg</code> (maiúscula/minúscula importa!)</p>
+      <p>2. Arquivo em outra pasta: se o HTML está na raiz e a imagem numa pasta <code style="font-family:'Share Tech Mono',monospace">imagens/</code>, escreva <code style="font-family:'Share Tech Mono',monospace">src="imagens/eu.jpg"</code></p>
+      <p style="margin:0">3. Extensão errada: arquivo salvo como <code style="font-family:'Share Tech Mono',monospace">.jpeg</code> mas escrito como <code style="font-family:'Share Tech Mono',monospace">.jpg</code> no src.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ─── S10 ─── -->
+  <section class="section" id="s10">
+    <div class="section-header">
+      <div class="section-icon ic-green">🔬</div>
+      <div>
+        <div class="section-num">10</div>
+        <h2>Projeto da aula — análise completa</h2>
+      </div>
+    </div>
+
+    <p>
+      Vamos juntar tudo e ver como os dois arquivos do projeto se relacionam. Cada elemento do HTML tem um estilo correspondente no CSS:
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Elemento no HTML</th>
+            <th>Tag / Classe</th>
+            <th>Regra no CSS</th>
+            <th>Efeito visual</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Título</td>
+            <td><code>&lt;h1&gt;</code></td>
+            <td><code class="css">h1 { color: red; }</code></td>
+            <td>Texto vermelho</td>
+          </tr>
+          <tr>
+            <td>1º parágrafo</td>
+            <td><code>&lt;p class="p1"&gt;</code></td>
+            <td><code class="css">.p1 { color: green; }</code></td>
+            <td>Texto verde</td>
+          </tr>
+          <tr>
+            <td>2º parágrafo</td>
+            <td><code>&lt;p class="p2"&gt;</code></td>
+            <td><code class="css">.p2 { color: purple; }</code></td>
+            <td>Texto roxo</td>
+          </tr>
+          <tr>
+            <td>3º parágrafo</td>
+            <td><code>&lt;p class="p3"&gt;</code></td>
+            <td><code class="css">.p3 { color: yellow; }</code></td>
+            <td>Texto amarelo</td>
+          </tr>
+          <tr>
+            <td>Corpo da página</td>
+            <td><code>&lt;body&gt;</code></td>
+            <td><code class="css">body { max-width: 800px; margin: 0 auto; }</code></td>
+            <td>Centralizado, máx. 800px</td>
+          </tr>
+          <tr>
+            <td>Foto do aluno</td>
+            <td><code>&lt;img&gt;</code></td>
+            <td><code class="css">img { width: 200px; border: 5px solid black; }</code></td>
+            <td>200px com borda preta</td>
+          </tr>
+          <tr>
+            <td>Vídeo</td>
+            <td><code>&lt;video&gt;</code></td>
+            <td><code class="css">video { width: 100%; max-width: 800px; }</code></td>
+            <td>Responsivo, até 800px</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>E aqui está o resultado com os estilos aplicados:</p>
+
+    <div class="preview-wrap">
+      <div class="preview-bar">
+        <div class="preview-bar-dots">
+          <span style="background:#ff5f56"></span>
+          <span style="background:#ffbd2e"></span>
+          <span style="background:#27c93f"></span>
+        </div>
+        <div class="preview-url">127.0.0.1 / index.html</div>
+        <span class="preview-label">COM CSS ✅</span>
+      </div>
+      <div class="preview-body" style="max-width:800px; margin:0 auto; text-align:center; color:blue; font-family:Arial,sans-serif; background:#fff;">
+        <h1 style="color:red; font-size:2em; margin-bottom:14px;">Olá, mundo!</h1>
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect width='200' height='200' fill='%23888'/%3E%3Ctext x='50%25' y='42%25' dominant-baseline='middle' text-anchor='middle' font-size='13' fill='%23fff' font-family='Arial'%3Eeu.jpg%3C/text%3E%3Ctext x='50%25' y='60%25' dominant-baseline='middle' text-anchor='middle' font-size='11' fill='%23ddd' font-family='Arial'%3E(foto do aluno)%3C/text%3E%3C/svg%3E" alt="eu.jpg" style="width:200px; border:5px solid black; display:block; margin:0 auto 20px;">
+        <p style="color:green; margin-bottom:8px;">Esta é minha primeira página HTML.</p>
+        <p style="color:purple; margin-bottom:8px;">Este é meu segundo parágrafo.</p>
+        <p style="color:#cccc00; margin-bottom:0;">Este é meu terceiro parágrafo.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ─── S11 ─── -->
+  <section class="section" id="s11">
+    <div class="section-header">
+      <div class="section-icon ic-pink">📌</div>
+      <div>
+        <div class="section-num">11</div>
+        <h2>Fichinha de referência + desafio</h2>
+      </div>
+    </div>
+
+    <p>
+      Guarde essas tags e propriedades — elas são os tijolos de qualquer página web:
+    </p>
+
+    <div class="ref-grid">
+      <div class="ref-card">
+        <div class="ref-tag html">&lt;!DOCTYPE html&gt;</div>
+        <div class="ref-desc">Declaração obrigatória. Sempre a primeira linha.</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-tag html">&lt;html lang="pt-br"&gt;</div>
+        <div class="ref-desc">Elemento raiz. Envolve tudo.</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-tag html">&lt;head&gt;</div>
+        <div class="ref-desc">Configurações invisíveis: charset, title, link CSS.</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-tag html">&lt;body&gt;</div>
+        <div class="ref-desc">Tudo que aparece na tela.</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-tag html">&lt;link rel="stylesheet" href="style.css"&gt;</div>
+        <div class="ref-desc">Conecta o arquivo CSS ao HTML.</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-tag html">&lt;h1&gt; a &lt;h6&gt;</div>
+        <div class="ref-desc">Títulos do mais importante ao menor.</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-tag html">&lt;p class="nome"&gt;</div>
+        <div class="ref-desc">Parágrafo com classe para estilizar.</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-tag html">&lt;img src="arq.jpg" alt="desc"&gt;</div>
+        <div class="ref-desc">Imagem. Tag sem fechamento.</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-tag html">&lt;video autoplay loop muted&gt;</div>
+        <div class="ref-desc">Vídeo com reprodução automática.</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-tag css">color: valor</div>
+        <div class="ref-desc">Cor do texto. Aceita nome ou código hex.</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-tag css">background-color: valor</div>
+        <div class="ref-desc">Cor de fundo do elemento.</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-tag css">font-size: 18px</div>
+        <div class="ref-desc">Tamanho do texto em pixels.</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-tag css">margin: 0 auto</div>
+        <div class="ref-desc">Centraliza elemento bloco com largura definida.</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-tag css">border: 5px solid black</div>
+        <div class="ref-desc">Borda: espessura, estilo, cor.</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-tag css">display: block</div>
+        <div class="ref-desc">Transforma elemento em bloco.</div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-tag css">width / max-width</div>
+        <div class="ref-desc">Largura fixa ou máxima do elemento.</div>
+      </div>
+    </div>
+
+    <div class="activity">
+      <div class="activity-title">⚡ DESAFIO — Monte a sua página</div>
+      <ol>
+        <li>Crie uma pasta chamada <strong>minha-pagina</strong> no computador.</li>
+        <li>Dentro dela crie dois arquivos: <strong>index.html</strong> e <strong>style.css</strong>.</li>
+        <li>No HTML, adicione um <code style="font-family:'Share Tech Mono',monospace">&lt;h1&gt;</code> com seu nome, uma foto sua (<code style="font-family:'Share Tech Mono',monospace">&lt;img&gt;</code>) e <strong>3 parágrafos</strong> sobre você — cada um com uma classe diferente.</li>
+        <li>No CSS, dê uma cor diferente para cada parágrafo e coloque uma borda colorida na imagem.</li>
+        <li><strong>Bônus nível 1:</strong> use <code style="font-family:'Share Tech Mono',monospace; color:#69f0ae">background-color</code> no body para mudar a cor de fundo da página.</li>
+        <li><strong>Bônus nível 2:</strong> adicione <code style="font-family:'Share Tech Mono',monospace; color:#69f0ae">font-size</code> e <code style="font-family:'Share Tech Mono',monospace; color:#69f0ae">font-family</code> no body para mudar a fonte de toda a página.</li>
+        <li><strong>Bônus nível 3:</strong> pesquise "cores hexadecimais" e use códigos como <code style="font-family:'Share Tech Mono',monospace; color:#69f0ae">#ff5733</code> em vez de nomes de cor.</li>
+      </ol>
+    </div>
+
+    <!-- PRÓXIMA AULA -->
+    <div class="next-card">
+      <div class="arrow">▶</div>
+      <div>
+        <h3>// PRÓXIMA AULA</h3>
+        <p>Aula 01 — <span>Construindo Páginas HTML: o painel do ZoyMaker</span></p>
+        <p style="font-size:0.82rem; color:#6a7090; margin-top:4px;">header · main · footer · CSS Grid · variáveis CSS · JavaScript básico</p>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  ZoyBlocks Robotics · Aula 00 — HTML + CSS Base · Material do Professor · 2026
+</footer>
+
+</body>
+</html>
