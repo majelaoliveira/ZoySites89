@@ -3,7 +3,7 @@ Repositório de aulas práticas de HTML e CSS para alunos do 8º e 9º ano.
 Acesse direto no navegador, sem precisar baixar nada.
 
 🔗 Acesse as aulas aqui
-👉 majelaoliveira.github.io/ZoySites89
+👉 https://majelaoliveira.github.io/ZoySites89/
 
 📚 Aulas disponíveis
 AulaTítuloLink direto01Estrutura básica do HTMLAbrir aula 0102Estilizando com CSSAbrir aula 02
