@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zoy Educa — Criação de Sites</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green: #4CAF50;
+      --green-dark: #2e7d32;
+      --green-light: #A5D6A7;
+      --bg: #0a0f0a;
+      --card: #111811;
+      --text: #f0f5f0;
+      --muted: #7a997a;
+      --border: #1e2e1e;
+      --accent: #76ff03;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Background grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(76,175,80,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(76,175,80,.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glow {
+      position: fixed;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(76,175,80,.15) 0%, transparent 70%);
+      border-radius: 50%;
+      top: -100px; left: -100px;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatGlow 8s ease-in-out infinite;
+    }
+    .glow2 {
+      position: fixed;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(118,255,3,.08) 0%, transparent 70%);
+      border-radius: 50%;
+      bottom: -80px; right: -80px;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatGlow 10s ease-in-out infinite reverse;
+    }
+
+    @keyframes floatGlow {
+      0%, 100% { transform: translate(0,0); }
+      50% { transform: translate(30px, 30px); }
+    }
+
+    /* Header */
+    header {
+      position: relative; z-index: 10;
+      padding: 32px 40px 0;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      animation: fadeDown .7s ease both;
+    }
+
+    .logo-box {
+      width: 48px; height: 48px;
+      border: 2px solid var(--green);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--accent);
+      box-shadow: 0 0 16px rgba(118,255,3,.25);
+    }
+
+    .logo-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -.5px;
+    }
+    .logo-text span { color: var(--accent); }
+
+    .badge-tag {
+      margin-left: auto;
+      background: rgba(76,175,80,.12);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 4px 14px;
+      font-size: 12px;
+      color: var(--green-light);
+      letter-spacing: .05em;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative; z-index: 10;
+      text-align: center;
+      padding: 64px 24px 40px;
+      animation: fadeUp .8s .1s ease both;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--green);
+      background: rgba(76,175,80,.1);
+      border: 1px solid rgba(76,175,80,.25);
+      border-radius: 99px;
+      padding: 5px 16px;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(36px, 7vw, 72px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    h1 em {
+      font-style: normal;
+      color: var(--accent);
+      text-shadow: 0 0 30px rgba(118,255,3,.4);
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+    }
+
+    /* Cards grid */
+    .section {
+      position: relative; z-index: 10;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+      animation: fadeUp .6s ease both;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(76,175,80,.4);
+      box-shadow: 0 12px 40px rgba(76,175,80,.1);
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(76,175,80,.06), transparent 60%);
+      opacity: 0;
+      transition: opacity .25s;
+    }
+    .card:hover::before { opacity: 1; }
+
+    .card-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: rgba(76,175,80,.1);
+      border: 1px solid rgba(76,175,80,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+
+    .card-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      color: var(--muted);
+    }
+
+    .card-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--text);
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .card-arrow {
+      align-self: flex-start;
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      color: var(--green);
+      transition: background .2s, transform .2s;
+    }
+    .card:hover .card-arrow {
+      background: var(--green);
+      color: #0a0f0a;
+      transform: rotate(-45deg);
+    }
+
+    /* Em breve */
+    .card.soon {
+      opacity: .5;
+      pointer-events: none;
+    }
+    .card.soon .card-icon { filter: grayscale(1); }
+    .soon-badge {
+      position: absolute;
+      top: 16px; right: 16px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 99px;
+      font-size: 10px;
+      letter-spacing: .1em;
+      padding: 3px 10px;
+      color: var(--muted);
+    }
+
+    /* Footer */
+    footer {
+      position: relative; z-index: 10;
+      text-align: center;
+      padding: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    footer a { color: var(--green); text-decoration: none; }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform: translateY(20px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity:0; transform: translateY(-12px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    .card:nth-child(1) { animation-delay: .1s; }
+    .card:nth-child(2) { animation-delay: .2s; }
+    .card:nth-child(3) { animation-delay: .3s; }
+    .card:nth-child(4) { animation-delay: .4s; }
+    .card:nth-child(5) { animation-delay: .5s; }
+    .card:nth-child(6) { animation-delay: .6s; }
+  </style>
+</head>
+<body>
+
+<div class="glow"></div>
+<div class="glow2"></div>
+
+<header>
+  <div class="logo-box">Z</div>
+  <div class="logo-text">Zoy<span>Educa</span></div>
+  <div class="badge-tag">Criação de Sites · 8º e 9º ano</div>
+</header>
+
+<section class="hero">
+  <div class="hero-eyebrow">🚀 Módulo · HTML & CSS</div>
+  <h1>Aprenda a criar<br><em>sites do zero</em></h1>
+  <p class="hero-sub">Escolha a aula abaixo e abra direto no seu Chromebook. Sem instalar nada.</p>
+</section>
+
+<section class="section">
+  <div class="section-label">Aulas disponíveis</div>
+  <div class="grid">
+
+    <!-- AULA 1 — substitua o href pelo link real -->
+    <a href="aula1.html" class="card">
+      <div class="card-icon">🏗️</div>
+      <div class="card-num">AULA 01</div>
+      <div class="card-title">Estrutura básica do HTML</div>
+      <div class="card-desc">Tags essenciais, head, body e como um site é montado por dentro.</div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <!-- AULA 2 -->
+    <a href="aula2.html" class="card">
+      <div class="card-icon">🎨</div>
+      <div class="card-num">AULA 02</div>
+      <div class="card-title">Estilizando com CSS</div>
+      <div class="card-desc">Cores, fontes, tamanhos e como o CSS transforma um site cinza em algo incrível.</div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <!-- AULA 3 — em breve -->
+    <div class="card soon">
+      <span class="soon-badge">em breve</span>
+      <div class="card-icon">📦</div>
+      <div class="card-num">AULA 03</div>
+      <div class="card-title">Box Model e Layout</div>
+      <div class="card-desc">Entenda como os elementos ocupam espaço na tela.</div>
+      <div class="card-arrow">→</div>
+    </div>
+
+    <!-- AULA 4 — em breve -->
+    <div class="card soon">
+      <span class="soon-badge">em breve</span>
+      <div class="card-icon">📱</div>
+      <div class="card-num">AULA 04</div>
+      <div class="card-title">Responsividade</div>
+      <div class="card-desc">Como fazer um site ficar bonito no celular e no computador.</div>
+      <div class="card-arrow">→</div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  Feito com 💚 pela <a href="http://zoy.com.br" target="_blank">Zoy Educa</a> · Fortaleza, Ceará
+</footer>
+
+</body>
+</html>
